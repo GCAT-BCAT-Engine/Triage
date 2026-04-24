@@ -12,10 +12,12 @@ class TestSufficiencyRegistry:
                 SignalRequirement("b", min_duration_sec=5),
             ],
         )
-        result = reg.check({
-            "a": {"value": 1.0, "quality": 0.8, "duration_sec": 10},
-            "b": {"value": 1.0, "quality": 0.8, "duration_sec": 10},
-        })
+        result = reg.check(
+            {
+                "a": {"value": 1.0, "quality": 0.8, "duration_sec": 10},
+                "b": {"value": 1.0, "quality": 0.8, "duration_sec": 10},
+            }
+        )
         assert result.sufficient is True
         assert result.flags == []
 

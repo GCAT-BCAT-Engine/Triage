@@ -7,10 +7,18 @@ class TestScalarComputation:
     def test_perfect_inputs(self):
         config = ScalarConfig(
             domain="test",
-            weights={k: 1.0 for k in [
-                "energy_integrity", "mechanical_output", "oxygen_delivery",
-                "respiration", "coherence", "trend", "observability"
-            ]},
+            weights={
+                k: 1.0
+                for k in [
+                    "energy_integrity",
+                    "mechanical_output",
+                    "oxygen_delivery",
+                    "respiration",
+                    "coherence",
+                    "trend",
+                    "observability",
+                ]
+            },
         )
         inputs = {k: 1.0 for k in config.weights}
         result = compute_scalar(inputs, config)
@@ -19,10 +27,18 @@ class TestScalarComputation:
     def test_floor_prevents_zero_collapse(self):
         config = ScalarConfig(
             domain="test",
-            weights={k: 1.0 for k in [
-                "energy_integrity", "mechanical_output", "oxygen_delivery",
-                "respiration", "coherence", "trend", "observability"
-            ]},
+            weights={
+                k: 1.0
+                for k in [
+                    "energy_integrity",
+                    "mechanical_output",
+                    "oxygen_delivery",
+                    "respiration",
+                    "coherence",
+                    "trend",
+                    "observability",
+                ]
+            },
             floor=0.1,
         )
         inputs = {k: 0.0 for k in config.weights}

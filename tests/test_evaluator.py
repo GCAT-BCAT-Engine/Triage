@@ -37,16 +37,18 @@ class TestTriageEvaluator:
 
     def test_full_pipeline_green(self):
         ev = self._make_evaluator()
-        result = ev.evaluate({
-            "energy_integrity": 1.0,
-            "control": 1.0,
-            "mechanical_output": 1.0,
-            "oxygen_delivery": 1.0,
-            "respiration": 1.0,
-            "observability": 1.0,
-            "coherence": 1.0,
-            "trend": 1.0,
-        })
+        result = ev.evaluate(
+            {
+                "energy_integrity": 1.0,
+                "control": 1.0,
+                "mechanical_output": 1.0,
+                "oxygen_delivery": 1.0,
+                "respiration": 1.0,
+                "observability": 1.0,
+                "coherence": 1.0,
+                "trend": 1.0,
+            }
+        )
         assert result.admissible is True
         assert result.level == "GREEN"
         assert result.commit_hash is not None
@@ -54,11 +56,13 @@ class TestTriageEvaluator:
 
     def test_missing_required_inadmissible(self):
         ev = self._make_evaluator()
-        result = ev.evaluate({
-            "energy_integrity": 0.95,
-            "mechanical_output": 0.90,
-            "observability": 0.90,
-        })
+        result = ev.evaluate(
+            {
+                "energy_integrity": 0.95,
+                "mechanical_output": 0.90,
+                "observability": 0.90,
+            }
+        )
         assert result.admissible is False
         assert result.level in ("RED", "BLACK")
         assert any("control missing" in f for f in result.sufficiency_flags)
@@ -66,22 +70,26 @@ class TestTriageEvaluator:
 
     def test_hard_trigger_inadmissible(self):
         ev = self._make_evaluator()
-        result = ev.evaluate({
-            "energy_integrity": 0.95,
-            "control": {"value": 0},
-            "mechanical_output": 0.90,
-            "observability": 0.90,
-        })
+        result = ev.evaluate(
+            {
+                "energy_integrity": 0.95,
+                "control": {"value": 0},
+                "mechanical_output": 0.90,
+                "observability": 0.90,
+            }
+        )
         assert result.admissible is False
         assert result.level in ("RED", "BLACK")
         assert "LOSS_OF_CONTROL" in result.reason_codes
 
     def test_commit_record_immutable(self):
         ev = self._make_evaluator()
-        result = ev.evaluate({
-            "energy_integrity": 0.95,
-            "control": 0.95,
-        })
+        result = ev.evaluate(
+            {
+                "energy_integrity": 0.95,
+                "control": 0.95,
+            }
+        )
         record = result.commit_record
         assert record.domain == "test"
         assert record.admissible is True
