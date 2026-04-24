@@ -1,7 +1,5 @@
 """Tests for admissibility gate."""
 
-import pytest
-
 from triage.core.admissibility import AdmissibilityGate, HardTrigger
 
 

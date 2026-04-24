@@ -1,8 +1,6 @@
 """Tests for sufficiency registry."""
 
-import pytest
-
-from triage.core.sufficiency import SufficiencyRegistry, SignalRequirement
+from triage.core.sufficiency import SignalRequirement, SufficiencyRegistry
 
 
 class TestSufficiencyRegistry:
@@ -53,5 +51,5 @@ class TestSufficiencyRegistry:
             domain="test",
             required_signals=[SignalRequirement("a", min_quality=0.9)],
         )
-        result = reg.check({"a": 0.5})  # bare value
-        assert result.sufficient is True  # assumed perfect quality
+        result = reg.check({"a": 0.5})
+        assert result.sufficient is True

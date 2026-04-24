@@ -1,12 +1,10 @@
 """Integration tests for the full triage pipeline."""
 
-import pytest
-
-from triage.core.evaluator import TriageEvaluator, DomainConfig
-from triage.core.sufficiency import SufficiencyRegistry, SignalRequirement
 from triage.core.admissibility import AdmissibilityGate
+from triage.core.coherence import CoherenceMonitor
+from triage.core.evaluator import DomainConfig, TriageEvaluator
 from triage.core.scalar import ScalarConfig
-from triage.core.coherence import CoherenceMonitor, CoherenceRule
+from triage.core.sufficiency import SignalRequirement, SufficiencyRegistry
 
 
 class TestTriageEvaluator:
@@ -58,7 +56,6 @@ class TestTriageEvaluator:
         ev = self._make_evaluator()
         result = ev.evaluate({
             "energy_integrity": 0.95,
-            # control missing
             "mechanical_output": 0.90,
             "observability": 0.90,
         })
@@ -71,7 +68,7 @@ class TestTriageEvaluator:
         ev = self._make_evaluator()
         result = ev.evaluate({
             "energy_integrity": 0.95,
-            "control": {"value": 0},  # loss of control
+            "control": {"value": 0},
             "mechanical_output": 0.90,
             "observability": 0.90,
         })

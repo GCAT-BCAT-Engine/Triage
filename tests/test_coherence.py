@@ -1,7 +1,5 @@
 """Tests for coherence monitor."""
 
-import pytest
-
 from triage.core.coherence import CoherenceMonitor, CoherenceRule
 
 
@@ -55,4 +53,4 @@ class TestCoherenceMonitor:
             rules=[CoherenceRule("a", "b", "proximity")]
         )
         result = mon.check({"a": 0.5})
-        assert result.coherent is True  # cannot check, so no violation
+        assert result.coherent is True
