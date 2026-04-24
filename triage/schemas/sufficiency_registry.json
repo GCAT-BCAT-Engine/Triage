@@ -16,9 +16,7 @@
         "type": "object",
         "required": ["signal_id"],
         "properties": {
-          "signal_id": {
-            "type": "string"
-          },
+          "signal_id": {"type": "string"},
           "min_quality": {
             "type": "number",
             "minimum": 0,
@@ -40,9 +38,7 @@
         "type": "object",
         "required": ["signal_id"],
         "properties": {
-          "signal_id": {
-            "type": "string"
-          },
+          "signal_id": {"type": "string"},
           "min_quality": {
             "type": "number",
             "minimum": 0,
