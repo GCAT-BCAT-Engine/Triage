@@ -48,9 +48,7 @@ class SufficiencyRegistry:
                 duration = float("inf")
 
             if quality < req.min_quality:
-                quality_failures.append(
-                    f"{req.signal_id} quality {quality} < {req.min_quality}"
-                )
+                quality_failures.append(f"{req.signal_id} quality {quality} < {req.min_quality}")
             if duration < req.min_duration_sec:
                 duration_failures.append(
                     f"{req.signal_id} duration {duration}s < {req.min_duration_sec}s"
