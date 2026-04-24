@@ -1,0 +1,61 @@
+name: StegDB Sync
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 */6 * * *'  # Every 6 hours
+  workflow_dispatch:
+
+jobs:
+  emit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -e ".[dev]"
+      - name: Emit pending events
+        run: |
+          if [ -f stegdb_events.jsonl ]; then
+            python -c "
+from triage.stegdb_emitter import TriageStegDBEmitter
+import json, os
+emitter = TriageStegDBEmitter(
+    source_repo='github.com/GCAT-BCAT-Engine/Triage',
+    backend=os.environ.get('STEGDB_BACKEND', 'git_commit')
+)
+with open('stegdb_events.jsonl') as f:
+    for line in f:
+        event = json.loads(line)
+        emitter.adapter.emit(
+            event_type=event['event_type'],
+            payload=event['payload'],
+            source_commit=event['source_commit']
+        )
+"
+            git rm stegdb_events.jsonl || true
+            git commit -m "chore: emit stegdb events [skip ci]" || true
+            git push || true
+
+  receive:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install deps
+        run: pip install -e ".[dev]"
+      - name: Check for canonical updates
+        run: |
+          if [ -f stegdb_canonical/update.json ]; then
+            python -m triage.canonical_updater stegdb_canonical/update.json
+            git add -A
+            git commit -m "chore: apply canonical update from StegDB" || true
+            git push || true
+          fi
