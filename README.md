@@ -1,6 +1,9 @@
 # Commit-Time Triage Engine
 
-A minimal admissibility-based triage framework for evaluating whether a human, robotic, or AI-enabled embodied system remains in a recoverable state at the moment an action, escalation, or continued operation decision is made.
+A minimal admissibility-based triage framework for evaluating whether a
+human, robotic, or AI-enabled embodied system remains in a recoverable
+state at the moment an action, escalation, or continued operation
+decision is made.
 
 > **No diagnosis without sufficient data. No action without admissibility.**
 
@@ -23,7 +26,8 @@ It separates:
 ## Core Architecture
 
 ```
-sensor input → sufficiency registry → sufficiency check → admissibility gate → scalar computation → triage output
+sensor input → sufficiency registry → sufficiency check →
+admissibility gate → scalar computation → triage output
 ```
 
 ## Key Outputs
@@ -49,11 +53,11 @@ evaluator = TriageEvaluator(ROBOTICS_CONFIG)
 result = evaluator.evaluate({
     "energy_integrity": 0.85,
     "mechanical_output": 0.90,
-    "oxygen_delivery": None,      # missing — sufficiency check catches this
+    "oxygen_delivery": None,
     "respiration": 0.80,
     "coherence": 0.95,
     "trend": -0.02,
-    "observability": 0.70
+    "observability": 0.70,
 })
 
 print(result)
@@ -112,7 +116,9 @@ The first working version proves:
 
 ## License
 
-Apache 2.0 — see [LICENSE](LICENSE). This software is provided with an explicit safety notice: it is not a medical device and must not be used as a substitute for professional medical judgment or emergency response.
+Apache 2.0 — see [LICENSE](LICENSE). This software is provided with an
+explicit safety notice: it is not a medical device and must not be used
+as a substitute for professional medical judgment or emergency response.
 
 ---
 
