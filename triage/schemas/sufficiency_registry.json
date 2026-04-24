@@ -1,0 +1,62 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "SufficiencyRegistry",
+  "description": "Schema for defining sufficiency rules per domain.",
+  "type": "object",
+  "required": ["domain", "required_signals"],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Domain identifier (e.g., human_medical, robotics, embodied_ai)"
+    },
+    "required_signals": {
+      "type": "array",
+      "description": "Signals that must be present for sufficiency",
+      "items": {
+        "type": "object",
+        "required": ["signal_id"],
+        "properties": {
+          "signal_id": {
+            "type": "string"
+          },
+          "min_quality": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0
+          },
+          "min_duration_sec": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      }
+    },
+    "optional_signals": {
+      "type": "array",
+      "description": "Signals that may supplement but never replace required signals",
+      "items": {
+        "type": "object",
+        "required": ["signal_id"],
+        "properties": {
+          "signal_id": {
+            "type": "string"
+          },
+          "min_quality": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 0
+          },
+          "min_duration_sec": {
+            "type": "number",
+            "minimum": 0,
+            "default": 0
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}
