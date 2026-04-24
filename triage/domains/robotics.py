@@ -3,11 +3,11 @@
 Prioritizes energy integrity and mechanical output.
 """
 
-from triage.core.sufficiency import SufficiencyRegistry, SignalRequirement
 from triage.core.admissibility import AdmissibilityGate
-from triage.core.scalar import ScalarConfig
 from triage.core.coherence import CoherenceMonitor, CoherenceRule
 from triage.core.evaluator import DomainConfig
+from triage.core.scalar import ScalarConfig
+from triage.core.sufficiency import SignalRequirement, SufficiencyRegistry
 
 ROBOTICS_CONFIG = DomainConfig(
     domain="robotics",
@@ -38,7 +38,7 @@ ROBOTICS_CONFIG = DomainConfig(
             "observability": 1.0,
         },
         floor=0.05,
-        trend_window_sec=30.0,  # 30 seconds for robotics
+        trend_window_sec=30.0,
     ),
     coherence=CoherenceMonitor(
         rules=[

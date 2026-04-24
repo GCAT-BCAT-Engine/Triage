@@ -3,11 +3,11 @@
 Prioritizes coherence, observability, and authority.
 """
 
-from triage.core.sufficiency import SufficiencyRegistry, SignalRequirement
 from triage.core.admissibility import AdmissibilityGate
-from triage.core.scalar import ScalarConfig
 from triage.core.coherence import CoherenceMonitor, CoherenceRule
 from triage.core.evaluator import DomainConfig
+from triage.core.scalar import ScalarConfig
+from triage.core.sufficiency import SignalRequirement, SufficiencyRegistry
 
 EMBODIED_AI_CONFIG = DomainConfig(
     domain="embodied_ai",
@@ -38,7 +38,7 @@ EMBODIED_AI_CONFIG = DomainConfig(
             "observability": 1.2,
         },
         floor=0.05,
-        trend_window_sec=60.0,  # 1 minute for AI trend
+        trend_window_sec=60.0,
     ),
     coherence=CoherenceMonitor(
         rules=[

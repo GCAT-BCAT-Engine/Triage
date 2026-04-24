@@ -3,11 +3,11 @@
 Prioritizes oxygen delivery, respiration, and perfusion.
 """
 
-from triage.core.sufficiency import SufficiencyRegistry, SignalRequirement
 from triage.core.admissibility import AdmissibilityGate
-from triage.core.scalar import ScalarConfig
 from triage.core.coherence import CoherenceMonitor, CoherenceRule
 from triage.core.evaluator import DomainConfig
+from triage.core.scalar import ScalarConfig
+from triage.core.sufficiency import SignalRequirement, SufficiencyRegistry
 
 HUMAN_MEDICAL_CONFIG = DomainConfig(
     domain="human_medical",
@@ -38,7 +38,7 @@ HUMAN_MEDICAL_CONFIG = DomainConfig(
             "observability": 1.1,
         },
         floor=0.05,
-        trend_window_sec=300.0,  # 5 minutes for medical trend
+        trend_window_sec=300.0,
     ),
     coherence=CoherenceMonitor(
         rules=[
