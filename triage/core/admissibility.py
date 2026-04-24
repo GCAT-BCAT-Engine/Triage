@@ -6,7 +6,7 @@ admissibility = False regardless of other factors.
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from enum import Enum
 from typing import Any
 
@@ -29,7 +29,6 @@ class AdmissibilityGate:
     """Evaluates hard safety triggers."""
 
     observability_threshold: float = 0.2
-    coherence_threshold: float = 0.3
 
     def check(
         self,
@@ -46,7 +45,6 @@ class AdmissibilityGate:
         if not coherence_ok:
             triggers.append(HardTrigger.INCOHERENT_SIGNALS)
 
-        # Domain-specific hard triggers
         pulse = inputs.get("pulse")
         if pulse is not None and isinstance(pulse, dict):
             if pulse.get("value") in (0, None, False):

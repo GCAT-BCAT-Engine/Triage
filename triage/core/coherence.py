@@ -15,7 +15,7 @@ class CoherenceRule:
 
     signal_a: str
     signal_b: str
-    relation: str  # 'same_direction', 'proximity', 'mutex'
+    relation: str
     tolerance: float = 0.2
 
 
@@ -34,7 +34,7 @@ class CoherenceMonitor:
             b_raw = inputs.get(rule.signal_b)
 
             if a_raw is None or b_raw is None:
-                continue  # Cannot check coherence if signals missing
+                continue
 
             a_val = a_raw["value"] if isinstance(a_raw, dict) else a_raw
             b_val = b_raw["value"] if isinstance(b_raw, dict) else b_raw

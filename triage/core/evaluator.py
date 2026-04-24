@@ -1,18 +1,19 @@
 """Triage evaluator — orchestrates the full pipeline.
 
-sensor input → sufficiency registry → sufficiency check → admissibility gate → scalar computation → triage output
+sensor input -> sufficiency registry -> sufficiency check ->
+admissibility gate -> scalar computation -> triage output
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import Any
 
-from triage.core.sufficiency import SufficiencyRegistry, SufficiencyResult
 from triage.core.admissibility import AdmissibilityGate, AdmissibilityResult
-from triage.core.scalar import ScalarConfig, ScalarResult, compute_scalar, scalar_to_level
 from triage.core.coherence import CoherenceMonitor, CoherenceResult
 from triage.core.commit_binding import CommitRecord, bind_commit
+from triage.core.scalar import ScalarConfig, ScalarResult, compute_scalar, scalar_to_level
+from triage.core.sufficiency import SufficiencyRegistry, SufficiencyResult
 
 
 @dataclass
@@ -47,26 +48,16 @@ class TriageEvaluator:
 
     def evaluate(self, inputs: dict[str, Any]) -> TriageResult:
         """Run the full triage pipeline."""
-        # 1. Sufficiency check
         sufficiency: SufficiencyResult = self.config.sufficiency.check(inputs)
-
-        # 2. Coherence check
         coherence: CoherenceResult = self.config.coherence.check(inputs)
-
-        # 3. Admissibility gate (fail-closed)
         admissibility: AdmissibilityResult = self.config.admissibility.check(
             inputs,
             sufficiency_ok=sufficiency.sufficient,
             coherence_ok=coherence.coherent,
         )
-
-        # 4. Scalar computation (always run for telemetry, even if inadmissible)
         scalar_result: ScalarResult = compute_scalar(inputs, self.config.scalar)
-
-        # 5. Level assignment
         level = scalar_to_level(scalar_result.scalar, admissibility.admissible)
 
-        # 6. Commit binding
         record = bind_commit(
             domain=self.config.domain,
             admissible=admissibility.admissible,

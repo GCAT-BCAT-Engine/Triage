@@ -40,12 +40,10 @@ class SufficiencyRegistry:
                 missing.append(req.signal_id)
                 continue
 
-            # Expect dict with 'value', 'quality', 'duration_sec' keys
             if isinstance(raw, dict):
                 quality = raw.get("quality", 1.0)
                 duration = raw.get("duration_sec", float("inf"))
             else:
-                # Bare value — assume perfect quality and duration
                 quality = 1.0
                 duration = float("inf")
 
