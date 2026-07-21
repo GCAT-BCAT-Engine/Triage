@@ -1,0 +1,34 @@
+{
+  "schema_version": "1.0",
+  "repository": "GCAT-BCAT-Engine/Triage",
+  "objective_id": "triage-commit-time-admissibility-v1",
+  "runtime_observed": false,
+  "user_visible_outcome_verified": false,
+  "verifier_source": "github-actions",
+  "critical_blockers": 3,
+  "manual_completion_dependency": false,
+  "verified_at": "2026-07-21T20:36:12.734849Z",
+  "evidence_urls": [
+    "https://github.com/GCAT-BCAT-Engine/Triage/actions/workflows/autonomy-objective-validation.yml",
+    "https://github.com/GCAT-BCAT-Engine/Triage/blob/main/autonomy/objective-contract.json"
+  ],
+  "projection_state": "IMPLEMENTATION_INSTALLED_ACTIVATION_UNVERIFIED",
+  "implementation_checks": {
+    "all_domain_unit_tests_pass": true,
+    "objective_contract_bound": true,
+    "fail_closed_completion_policy": true,
+    "medical_authority_not_claimed": true
+  },
+  "missing_gates": [
+    "observed_user_facing_execution",
+    "runtime_observed",
+    "user_visible_outcome_verified"
+  ],
+  "authority": {
+    "unit_tests_are_operational_completion": false,
+    "workflow_success_is_user_visible_runtime": false,
+    "projection_is_release_authority": false,
+    "projection_is_medical_authority": false,
+    "manual_user_action_required": false
+  }
+}
