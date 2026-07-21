@@ -1,0 +1,37 @@
+{
+  "schema_version": "1.0",
+  "objective_id": "triage-commit-time-admissibility-v1",
+  "repository": "GCAT-BCAT-Engine/Triage",
+  "requested_capability": "Evaluate human, robotic, and embodied-AI state at commit time using explicit sufficiency, admissibility, scalar reserve, reason-code, and immutable audit-binding rules.",
+  "required_user_outcome": "A caller can submit a supported domain state and receive a deterministic triage result that fails closed on missing required data and explains the decision with reason codes.",
+  "required_runtime_evidence": [
+    "all_domain_unit_tests_pass",
+    "missing_required_signal_denies_admissibility",
+    "critical_state_fails_closed",
+    "degradation_reduces_scalar_reserve",
+    "reason_codes_are_emitted",
+    "commit_hash_is_emitted",
+    "observed_user_facing_execution"
+  ],
+  "disallowed_substitutes": [
+    "README_claims",
+    "architecture_manifest_only",
+    "workflow_presence_only",
+    "unit_tests_as_user_facing_runtime",
+    "prototype_status_as_operational_completion",
+    "medical_diagnosis_claim"
+  ],
+  "completion_policy": {
+    "require_live_execution": true,
+    "require_user_visible_outcome": true,
+    "unknown_is_complete": false,
+    "unit_tests_prove_implementation_only": true
+  },
+  "safety_boundary": {
+    "medical_device_claimed": false,
+    "diagnosis_authority_claimed": false,
+    "missing_data_treated_as_normal": false,
+    "admissibility_required_before_continuation": true
+  },
+  "manual_user_action_required": false
+}
