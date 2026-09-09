@@ -7,7 +7,7 @@
   "verifier_source": "github-actions",
   "critical_blockers": 3,
   "manual_completion_dependency": false,
-  "verified_at": "2026-09-09T16:43:05.452466Z",
+  "verified_at": "2026-09-09T20:59:02.526764Z",
   "evidence_urls": [
     "https://github.com/GCAT-BCAT-Engine/Triage/actions/workflows/autonomy-objective-validation.yml",
     "https://github.com/GCAT-BCAT-Engine/Triage/blob/main/autonomy/objective-contract.json"
