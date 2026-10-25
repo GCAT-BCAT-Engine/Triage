@@ -37,7 +37,9 @@ class TriageStegDBEmitter:
             "sufficiency_flags": result.sufficiency_flags,
             "reason_codes": result.reason_codes,
             "commit_hash": result.commit_hash,
-            "inputs_summary": {k: ("present" if v is not None else "missing") for k, v in inputs.items()},
+            "inputs_summary": {
+                k: ("present" if v is not None else "missing") for k, v in inputs.items()
+            },
         }
         self.adapter.emit(
             event_type="triage.evaluation",

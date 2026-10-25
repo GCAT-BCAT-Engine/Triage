@@ -1,0 +1,1 @@
+black --check triage tests
