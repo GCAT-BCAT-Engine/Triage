@@ -1,0 +1,97 @@
+{
+ "schema": "stegverse.workflow-surface-registry/v1",
+ "goal_id": "G17-WORKFLOW-SURFACE-MINIMIZATION",
+ "repository": "GCAT-BCAT-Engine/Triage",
+ "policy_issue": "StegVerse-Labs/.github#167, #168; StegVerse-org/.github#166",
+ "preferred_repository_workflow_count_max": 2,
+ "exception_repository_workflow_count_max": 3,
+ "credential_authority": "the SKAP Vault inside KV is the only PII and credential store for every user, including the StegVerse ecosystem's own; no secret or token is referenced, introduced or moved by this fold",
+ "invariants": [
+  "Every workflow file is registered in surfaces[]; an unregistered or changed one fails closed (tests/test_workflow_surface_registry.py).",
+  "A new check is a group in tools/tasks/task_catalog.json, never a new workflow file.",
+  "The stable dispatcher carries no workflow_dispatch, schedule, repository_dispatch, issues or workflow_run trigger; a kept surface is pinned by sha256 and unchanged by the fold."
+ ],
+ "unregistered_workflow_outcome": {
+  "disposition": "FAIL_CLOSED",
+  "failure_code": "UNREGISTERED_WORKFLOW_SURFACE",
+  "failed_predicate": "EVERY_WORKFLOW_FILE_IS_REGISTERED",
+  "required_evidence_or_repair": "register the file in control/workflow-surface-registry.json surfaces[] or fold it into tools/tasks/task_catalog.json",
+  "retry_entrypoint": "tests/test_workflow_surface_registry.py",
+  "owning_existing_goal": "G17-WORKFLOW-SURFACE-MINIMIZATION (StegVerse-Labs/.github#167/#168); StegVerse-org/.github#166",
+  "next_attempt": "the next pull request touching .github/workflows/"
+ },
+ "surfaces": [
+  {
+   "path": ".github/workflows/validation-dispatcher.yml",
+   "classification": "KEEP_STABLE_DISPATCHER",
+   "triggers": [
+    "pull_request",
+    "push"
+   ],
+   "permissions": {
+    "contents": "read"
+   }
+  },
+  {
+   "path": ".github/workflows/autonomy-objective-validation.yml",
+   "classification": "KEEP_EXISTING_SURFACE_UNCHANGED",
+   "triggers": [
+    "push",
+    "pull_request",
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "permissions": {
+    "contents": "write"
+   },
+   "reason": "KEEP_EXISTING_SURFACE_UNCHANGED (destination-owned writer): it runs the Triage tests and projection on pull requests and pushes, and on push to main and its existing 6-hourly schedule it commits data/autonomy/completion-evidence.json with contents: write. A run block in the read-only dispatcher cannot carry that write; its schedule is existing, not added, and is not changed.",
+   "verbatim_sha256": "c81cb9dcae5f59067793dbb2a6ffe5ab4404769a1e921bfdc8a22528f2d8ae5e"
+  }
+ ],
+ "folded": [
+  {
+   "workflow": ".github/workflows/stegdb-sync.yml",
+   "name": null,
+   "triggers_before": [],
+   "classification": "ELIMINATE",
+   "status": "DONE",
+   "reason": "Invalid workflow file: YAML parse error at line 26 column 1 (the python -c body is not indented inside its run: | block), so GitHub records a failed run on every push (e.g. 2026-07-21) and none of its jobs ever ran. It is also a writer (git commit and git push from a cron and push trigger) that this lane does not carry. Kept verbatim as a record.",
+   "verbatim_record": "tools/tasks/folded/stegdb-sync.yml",
+   "verbatim_sha256": "8cf4942f32aff2e517e18e702fbaec428a77d7df9e731144802ae3767f2baea8"
+  },
+  {
+   "workflow": ".github/workflows/architecture-guard.yml",
+   "name": "Architecture Guard",
+   "triggers_before": [
+    "push",
+    "pull_request",
+    "schedule",
+    "workflow_dispatch"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "architecture-guard.validate-structure"
+   ],
+   "verbatim_record": "tools/tasks/folded/architecture-guard.yml",
+   "verbatim_sha256": "ebb771e57ac7fe5300ad45adc995711c199fc01f4a8ab126c0bd3858393e06c2"
+  },
+  {
+   "workflow": ".github/workflows/ci.yml",
+   "name": "CI",
+   "triggers_before": [
+    "push",
+    "pull_request"
+   ],
+   "classification": "CONSOLIDATE_INTO_STABLE_DISPATCHER",
+   "status": "DONE",
+   "catalog_groups": [
+    "ci.test-python3.10",
+    "ci.test-python3.11",
+    "ci.test-python3.12"
+   ],
+   "verbatim_record": "tools/tasks/folded/ci.yml",
+   "verbatim_sha256": "7892aba8cead17c8b2b02651c472fbd9af6be51969136d6b7b57360d5c1d339f"
+  }
+ ]
+}

@@ -1,0 +1,1 @@
+pytest --cov=triage --cov-report=xml tests/

@@ -7,7 +7,6 @@ Designed to run in CI or as a scheduled maintenance job.
 from __future__ import annotations
 
 import json
-import os
 import sys
 from pathlib import Path
 
